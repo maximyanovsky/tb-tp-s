@@ -16,6 +16,6 @@ public class CrosshairGUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		_image.enabled = _game.Player.state == CharacterState.AIMING;
+		_image.enabled = _game.CurrentCharacter.state == CharacterState.AIMING;
 	}
 }

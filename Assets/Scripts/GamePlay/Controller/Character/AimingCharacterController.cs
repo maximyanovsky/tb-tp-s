@@ -5,16 +5,16 @@ using UnityStandardAssets.CrossPlatformInput;
 public class AimingCharacterController : MonoBehaviour, ICharacterController 
 {
 	[SerializeField] private MouseLook _mouseLook;
-
 	private ICharacterModel _characterModel;
+
 	private Transform _characterTransform;
 	private Transform _cameraTransform;
-
-	public void Init(ICharacterModel character, Camera camera)
+	
+	void Awake()
 	{
-		_characterModel = character;
-		_characterTransform = character.transform;
-		_cameraTransform = camera.transform;
+		_cameraTransform = Camera.main.transform;
+		_characterModel = GetComponent<ICharacterModel>();
+		_characterTransform = _characterModel.transform;
 		_mouseLook.Init (_characterTransform, _cameraTransform);
 	}
 

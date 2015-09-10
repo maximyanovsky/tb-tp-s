@@ -2,21 +2,19 @@ using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-
 public class ThirdPersonCharacterController : MonoBehaviour, ICharacterController
 {
 	private ICharacterModel _characterModel;
-
     private Transform _cameraTransform;                
     private Vector3 _cameraForward;             
     private Vector3 _move;
     private bool _jump;         
 	private bool _fire;
-    
-	public void Init(ICharacterModel character, Camera camera)
+	
+	void Awake()
 	{
-		_characterModel = character;
-		_cameraTransform = camera.transform;
+		_characterModel = GetComponent<CharacterModel>();
+		_cameraTransform = Camera.main.transform;
 	}
 
     private void Update()

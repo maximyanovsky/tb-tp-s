@@ -4,12 +4,11 @@ using System.Collections;
 public class AttackCharacterController : MonoBehaviour, ICharacterController
 {
 	private ICharacterModel _character;
-
-	public void Init (ICharacterModel character, Camera camera)
+	void Start()
 	{
-		_character = character;
+		_character = GetComponent<ICharacterModel>();
 	}
-
+	
 	void FixedUpdate ()
 	{
 		//later here wil bee spawning a bullet etc, now just skip

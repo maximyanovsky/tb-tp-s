@@ -15,14 +15,10 @@ public class CharacterModel : AStateModel<CharacterState>, ICharacterModel
 
 	private Transform _cameraTransform;
 
-	public void Init (Transform cameraTransform)
-	{
-		_cameraTransform = cameraTransform;
-	}
-
 	// Use this for initialization
 	void Start () 
 	{
+		_cameraTransform = Camera.main.transform;
 		_thirdPersonCharacter = GetComponentInChildren<ThirdPersonCharacter> ();
 	}
 	
@@ -49,7 +45,7 @@ public class CharacterModel : AStateModel<CharacterState>, ICharacterModel
 
 public enum CharacterState
 {
-	NONE, MOVE, AIMING, ATTACK
+	NONE, IDLE, MOVE, AIMING, ATTACK
 }
 
 public class ControlStep

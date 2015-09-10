@@ -1,38 +1,39 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class CharacterStateController : MonoBehaviour 
 {
-	[SerializeField] private Camera _camera;
+	private ICharacterModel _character;
+	private IGameModel _game;
 
 	private Dictionary<CharacterState, ICharacterController> _stateDict;
-	private ICharacterModel _currentCharacter;
 	private ICharacterController _currentController;
 
-	public ICharacterModel CurrentCharacter
+	void Start()
 	{
-		get { return _currentCharacter; }
-		set
-		{
-			if (_currentCharacter != null)
-			{
-				_currentCharacter.StateChanged -= HandleStateChanged;
-				StopAllCoroutines();
-			}
-
-			_currentCharacter = value;
-			_currentCharacter.Init(_camera.transform);
-			_currentCharacter.StateChanged += HandleStateChanged;
-
-			if (_currentCharacter.state != CharacterState.NONE)
-			{
-				HandleStateChanged(_currentCharacter.state);
-			}
-			else
-				_currentCharacter.DoStep(new ControlStep(){ State = CharacterState.MOVE });
-		}
+		_game = GameModel.Current;
+		_character = GetComponent<ICharacterModel>();
+		
+		_game.CurrentCharacterChanged += OnCurrentCharacterChanged;
+		_character.StateChanged += HandleStateChanged;
+		
+		if (_game.CurrentCharacter != null)
+			OnCurrentCharacterChanged(_game.CurrentCharacter);
 	}
+
+    private void OnCurrentCharacterChanged(ICharacterModel value)
+    {
+		if (_character == value)
+		{
+			_character.DoStep(new ControlStep(){State = CharacterState.MOVE});
+		}
+		else
+		{
+			_character.DoStep(new ControlStep(){State = CharacterState.IDLE});
+		}
+    }
 
 	void HandleStateChanged (CharacterState state)
 	{
@@ -42,7 +43,6 @@ public class CharacterStateController : MonoBehaviour
 			_currentController.enabled = false;
 
 		_currentController = getController (state);
-		_currentController.Init (_currentCharacter, _camera);
 		StartCoroutine (EnableController ());
 	}
 
@@ -59,6 +59,7 @@ public class CharacterStateController : MonoBehaviour
 		registerController (CharacterState.MOVE, GetComponent<ThirdPersonCharacterController> ());
 		registerController (CharacterState.AIMING, GetComponent<AimingCharacterController> ());
 		registerController (CharacterState.ATTACK, GetComponent<AttackCharacterController> ());
+		registerController (CharacterState.IDLE, GetComponent<IdleCharacterController> ());
 	}
 
 	private ICharacterController getController(CharacterState state)
