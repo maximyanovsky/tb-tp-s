@@ -2,6 +2,7 @@ Library
 .DS_Store
 Temp
 obj
+.vscode
 *.csproj
 *.pidb
 *.unityproj
