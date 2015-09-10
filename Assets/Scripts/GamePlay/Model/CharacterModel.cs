@@ -32,10 +32,14 @@ public class CharacterModel : AStateModel<CharacterState>, ICharacterModel
 		{
 			_thirdPersonCharacter.Move (step.Move, step.Crouch, step.Jump);
 		} 
-		else if (state == CharacterState.AIMING && step.State != CharacterState.ATTACK) 
+		else
 		{
-			cachedTransform.localRotation = step.CharacterLocalRotation;
-			_cameraTransform.localRotation = step.CameraLocalRotation;
+			_thirdPersonCharacter.Move (Vector3.zero, false, false);
+			if (state == CharacterState.AIMING && step.State != CharacterState.ATTACK) 
+			{
+				cachedTransform.localRotation = step.CharacterLocalRotation;
+				_cameraTransform.localRotation = step.CameraLocalRotation;
+			}
 		}
 
 		if (step.State != CharacterState.NONE)
