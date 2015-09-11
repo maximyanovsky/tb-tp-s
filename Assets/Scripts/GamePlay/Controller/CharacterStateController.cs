@@ -1,10 +1,11 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 
+[RequireComponent (typeof (ICharacterModel))]
 public class CharacterStateController : MonoBehaviour 
 {
+	/*
 	private ICharacterModel _character;
 	private IGameModel _game;
 
@@ -72,4 +73,6 @@ public class CharacterStateController : MonoBehaviour
 		controller.enabled = false;
 		_stateDict [state] = controller;
 	}
+	
+	*/
 }

@@ -6,10 +6,7 @@ using System;
 
 public interface ICharacterModel : IStateModel<CharacterState>
 {
-	void DoStep (ControlStep step);
-
 	Transform transform { get; }
-	Transform thirdPersonPivot { get; }
-	Transform firstPersonPivot { get; }
 
+    void SetState(CharacterState state);
 }

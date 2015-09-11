@@ -9,7 +9,7 @@ abstract public class AStateModel<TState> : ExtendedMonoBehaviour, IStateModel<T
 	public TState state { get; private set; }
 	public event Action<TState> StateChanged;
 
-	protected void setState(TState state_)
+	public void SetState(TState state_)
 	{
 		if (!Enum.Equals (state, state_)) 
 		{
